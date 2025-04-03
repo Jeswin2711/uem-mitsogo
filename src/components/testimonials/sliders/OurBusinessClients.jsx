@@ -3,11 +3,9 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay } from 'swiper/modules';
-import group1Automotive from "../../../assets/group1-automotive.png";
-import wolt from "../../../assets/wolt.svg";
-import saic from "../../../assets/saic.svg";
-import merck from "../../../assets/merck.svg";
-import lowes from "../../../assets/lowes.svg";
+
+import { wolt, saic, merck, lowes, group1Automotive } from '@/assets';
+
 
 let clientLogos = [
   group1Automotive,
@@ -61,7 +59,7 @@ export const OurBusinessClients = () => {
     >
       {clientLogos.map((logo, index) => (
         <SwiperSlide>
-          <img src={logo} key={`logo_${index}`} />
+          <img src={logo} key={`logo_${index}`}  loading="lazy" alt='Client Logo'/>
         </SwiperSlide>
       ))}
     </Swiper>

@@ -1,17 +1,11 @@
-import React from "react";
-import hexNodeAppIcon from "../../assets/hexnode-app-icon.svg";
-import adopt from "../../assets/adopt.svg";
-import security from "../../assets/security.svg";
-import automation from "../../assets/automation.svg";
-import policy from "../../assets/policy.svg";
-import dotted from "../../assets/dotted.svg";
+import { policy, security, automationSvg, adopt, hexnodeAppIcon } from "@/assets";
 
 const CardData = ({ image, title, description }) => {
   return (
-    <div className="border rounded-xl border-[#d7d7d7] p-10 flex flex-col gap-4 w-2/5 bg-white z-10 relative group justify-between max-xl:p-6 max-xl:w-2/4 max-sm:w-full max-sm:p-6">
+    <div key={title} className="border rounded-xl border-primary p-10 flex flex-col gap-4 w-2/5 bg-white z-10 relative group justify-between max-xl:p-6 max-xl:w-2/4 max-sm:w-full max-sm:p-6 border-dashed">
       <div className="flex flex-col gap-2 items-start">
         <div className="flex gap-2">
-          <img src={image} />
+          <img src={image} loading="lazy" alt={`${title} Icon`}/>
           <h5 className="text-primary font-semibold text-2xl flex items-center max-lg:text-xl">
             {title}
           </h5>
@@ -22,6 +16,7 @@ const CardData = ({ image, title, description }) => {
         className={`text-action font-semibold text-lg transition-all duration-500 ease-in-out 
     opacity-0  visibility-hidden max-h-0 group-hover:opacity-100 group-hover:visibility-visible max-xl:opacity-100 max-xl:max-h-10 group-hover:max-h-10`}
         href="#"
+        aria-label={`Try Hexnode on your endpoints for ${title}`}
       >
         Try Hexnode on your endpoints
       </a>
@@ -46,7 +41,7 @@ const whyHex = [
     title: "Get more done with automation",
     description:
       "Hexnode UEM automation features help free up IT’s time spent on mundane and repetitive tasks. Do hours’ worth of work in a few minutes.",
-    image: automation,
+    image: automationSvg,
   },
   {
     title: "Unified Policy Management",
@@ -60,7 +55,7 @@ const WhyHexNode = () => {
   return (
     <section className="bg-grey-background flex justify-center">
       <div className="w-container py-14 m-auto flex flex-col items-center justify-center">
-        <h2 className="text-4xl font-bold">Why Hexnode?</h2>
+        <h2 className="relative text-4xl font-bold whyHexNode">Why Hexnode?</h2>
         <div className="flex flex-col mt-10">
           <div className="w-full flex justify-between max-xl:gap-8 max-sm:flex-col max-sm:gap-8">
             {whyHex.slice(0, 2).map((item) => (
@@ -85,9 +80,9 @@ const WhyHexNode = () => {
                   transform="translate(19047.193 5014.062)"
                   fill="none"
                   stroke="#020a19"
-                  stroke-linecap="round"
-                  stroke-width="1"
-                  stroke-dasharray="7"
+                  strokeLinecap="round"
+                  strokeWidth="1"
+                  strokeDasharray="7"
                 ></path>
               </svg>
             </div>
@@ -104,9 +99,9 @@ const WhyHexNode = () => {
                   transform="translate(19047.195 5014.062)"
                   fill="none"
                   stroke="#020a19"
-                  stroke-linecap="round"
-                  stroke-width="1"
-                  stroke-dasharray="7"
+                  strokeLinecap="round"
+                  strokeWidth="1"
+                  strokeDasharray="7"
                 ></path>
               </svg>
             </div>
@@ -123,9 +118,9 @@ const WhyHexNode = () => {
                   transform="translate(19047.193 5014.062)"
                   fill="none"
                   stroke="#020a19"
-                  stroke-linecap="round"
-                  stroke-width="1"
-                  stroke-dasharray="7"
+                  strokeLinecap="round"
+                  strokeWidth="1"
+                  strokeDasharray="7"
                 ></path>
               </svg>
             </div>
@@ -142,13 +137,13 @@ const WhyHexNode = () => {
                   transform="translate(19047.195 5014.062)"
                   fill="none"
                   stroke="#020a19"
-                  stroke-linecap="round"
-                  stroke-width="1"
-                  stroke-dasharray="7"
+                  strokeLinecap="round"
+                  strokeWidth="1"
+                  strokeDasharray="7"
                 ></path>
               </svg>
             </div>
-            <img src={hexNodeAppIcon} className="scale-150 pulseimage" />
+            <img src={hexnodeAppIcon} className="scale-150 pulseimage" loading="lazy" alt="Hexnode App Icon"/>
           </div>
           <div className="w-full flex justify-between max-sm:flex-col max-xl:mt-8 max-xl:gap-8 max-sm:gap-8 max-sm:mt-8">
             {whyHex.slice(2).map((item) => (

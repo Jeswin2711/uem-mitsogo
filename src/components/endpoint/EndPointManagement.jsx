@@ -1,20 +1,20 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import android from "../../assets/android.webp";
-import ios from "../../assets/iOS.webp";
-import macos from "../../assets/macOS.webp";
-import windows from "../../assets/windows.webp";
-import fireos from "../../assets/fireOs.webp";
-import tvos from "../../assets/tvOS.webp";
-
-// Import Swiper styles
+import {
+  iOS as ios,
+  macOS as macos,
+  windows,
+  fireOS as fireos,
+  tvOS as tvos,
+  android,
+} from "@/assets";
 import "swiper/css";
 
-let platforms = [
+const platforms = [
   {
     title: "Android",
     description:
-      "Remotely deploy, manage, monitor and secure Android devices in your organization. Set compliance benchmarks and leverage Android Enterprise to it’s full capabilities.",
+      "Remotely deploy, manage, monitor and secure Android devices in your organization. Set compliance benchmarks and leverage Android Enterprise to its full capabilities.",
     image: android,
   },
   {
@@ -32,7 +32,7 @@ let platforms = [
   {
     title: "Windows",
     description:
-      "Spearhead modern PC management in your organization with Hexnode. Set limit’s and monitor PC health and compliance remotely with Hexnode UEM.",
+      "Spearhead modern PC management in your organization with Hexnode. Set limits and monitor PC health and compliance remotely with Hexnode UEM.",
     image: windows,
   },
   {
@@ -44,14 +44,22 @@ let platforms = [
   {
     title: "FireOS",
     description:
-      "Enroll Amazon Fire tablets, phones and e-readers in Hexnode UEM to manage them all from a single console.",
+      "Enroll Amazon Fire tablets, phones, and e-readers in Hexnode UEM to manage them all from a single console.",
     image: fireos,
   },
 ];
 
 const EndPointManagement = () => {
-  const swiperRef = useRef();
+  const swiperRef = useRef(null);
   const [selectedKey, setSelectedKey] = useState("android");
+
+  // Optimized onClick function using useCallback
+  const handlePlatformClick = useCallback((platform, index) => {
+    setSelectedKey(platform.title.toLowerCase());
+    if (swiperRef.current) {
+      swiperRef.current.swiper.slideTo(index);
+    }
+  }, []);
 
   return (
     <section className="bg-grey-background py-20">
@@ -60,90 +68,54 @@ const EndPointManagement = () => {
           Multi-platform Endpoint Management
         </h2>
         <p className="text-secondary-text text-lg max-sm:hidden">
-          Devices of varying platforms? Hexnode thrives in a diverse
-          environment.
+          Devices of varying platforms? Hexnode thrives in a diverse environment.
         </p>
-        <div className="flex w-container mt-10 justify-between gap-10 max-lg:sticky max-lg:top-36 max-lg:w-full max-lg:gap-4">
+        <div className="flex w-container mt-10 justify-between gap-10 relative max-xl:w-full">
           <Swiper
-            direction={"vertical"}
+            direction="vertical"
             ref={swiperRef}
             spaceBetween={50}
             slidesPerView={1}
-            onSlideChange={() => console.log("slide change")}
-            onSwiper={(swiper) => console.log(swiper)}
-            className="h-[500px] w-2/4 max-sm:!hidden"
+            className="h-[500px] w-2/4 max-sm:!hidden max-xl:h-[300px] !sticky top-20 rounded-xl shadow-2xl"
           >
-            <SwiperSlide>
-              <img src={android} className="contain" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={ios} className="contain" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={macos} className="contain" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={windows} className="contain" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={tvos} className="contain" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={fireos} className="contain" />
-            </SwiperSlide>
+            {platforms.map(({ image, title }) => (
+              <SwiperSlide key={title}>
+                <img src={image} className="contain" loading="lazy" alt={`${title} platform`} />
+              </SwiperSlide>
+            ))}
           </Swiper>
           <div className="flex flex-col w-2/4 max-sm:w-full">
             {platforms.map((platform, index) => {
-              const isSelected = selectedKey === platform.title?.toLowerCase();
+              const isSelected = selectedKey === platform.title.toLowerCase();
               const isNextToSelected =
-                index ===
-                platforms.findIndex(
-                  (p) => p.title.toLowerCase() === selectedKey
-                ) +
-                  1;
+                index === platforms.findIndex((p) => p.title.toLowerCase() === selectedKey) + 1;
+
               return (
-                <>
-                  {isSelected &&  <img src={platform.image} className="hidden mb-6 max-sm:flex"/>}
-                  <div
-                    className={`${
-                      isSelected
-                        ? "border border-grey-400 rounded-xl flex flex-col gap-4 shadow-md px-8 py-4 bg-white transition-all duration-500 ease-in-out move-linear"
-                        : "px-8 py-4 text-primary rounded-none font-semibold text-2xl text-left border-t border-gray-300 first:border-none"
-                    } ${isNextToSelected ? "border-t-0" : ""} max-sm:w-full`}
-                    key={platform.title}
+                <div
+                  key={platform.title}
+                  className={`${
+                    isSelected
+                      ? "border border-grey-400 rounded-xl flex flex-col gap-4 shadow-md px-8 py-4 bg-white transition-all duration-500 ease-in-out move-linear"
+                      : "px-8 py-4 text-primary rounded-none font-semibold text-2xl text-left border-t border-gray-300 first:border-none"
+                  } ${isNextToSelected ? "border-t-0" : ""} max-sm:w-full`}
+                >
+                  <h3
+                    className={`font-semibold text-2xl ${
+                      isSelected ? "text-primary" : "cursor-pointer"
+                    }`}
+                    onClick={() => handlePlatformClick(platform, index)}
                   >
-                    <h3
-                      className={
-                        isSelected
-                          ? "text-primary rounded-none font-semibold text-2xl text-left"
-                          : "font-semibold text-2xl cursor-pointer"
-                      }
-                      onClick={() => {
-                        setSelectedKey(platform.title.toLowerCase());
-                        if (swiperRef?.current) {
-                          swiperRef?.current?.swiper?.slideTo(
-                            platforms.indexOf(platform)
-                          );
-                        }
-                      }}
-                    >
-                      {platform.title}
-                    </h3>
-                    {isSelected && (
-                      <div className="flex flex-col justify-between gap-2">
-                        <p className="text-secondary-text text-lg">
-                          {platform.description}
-                        </p>
-                        <a
-                          href="#"
-                          className="text-action font-semibold text-lg"
-                        >
-                          Try hexnode on your endpoints
-                        </a>
-                      </div>
-                    )}
-                  </div>
-                </>
+                    {platform.title}
+                  </h3>
+                  {isSelected && (
+                    <div className="flex flex-col justify-between gap-2">
+                      <p className="text-secondary-text text-lg">{platform.description}</p>
+                      <a href="#" className="text-action font-semibold text-lg">
+                        Try Hexnode on your endpoints
+                      </a>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>

@@ -111,12 +111,20 @@ html, body{
     transform: scale(1.8);
   }
 
-  50% {
+  25% {
     transform: scale(1.9);
+  }
+  
+  50% {
+    transform: scale(1.8);
+  }
+
+  75% {
+    transform: scale(2.0);
   }
 
   100% {
-    transform: scale(1.8);
+    transform: scale(1.9);
   }
 }
 
@@ -132,4 +140,16 @@ html, body{
 
 .bgfill:hover{
   background: white;
+}
+
+
+
+.whyHexNode::after{
+  position: absolute;
+  content: '';
+  width: 30%;
+  height: 3px;
+  bottom: -10px;
+  left: 40%;
+  background-color: red;
 }
